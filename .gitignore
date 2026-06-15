@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+*.egg
+.venv/
+venv/
+env/
+
+# Env files
+.env
+.env.*
+!.env.example
+
+# Firebase credentials (never commit)
+firebase-credentials.json
+*-credentials.json
+*.json
+!package.json
+
+# Flask session files
+flask_session/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Docker
+.dockerignore
+
+# Logs
+*.log
+logs/
+
+# SQLite dev database
+dev.db
+
+# Claude Code local files
+.claude/
+memory/

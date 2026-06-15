@@ -1,0 +1,49 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - DEBUG=true
+      - SECRET_KEY=local-dev-secret-key
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=creative_ai_studio
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - FIREBASE_API_KEY=${FIREBASE_API_KEY}
+      - FIREBASE_PROJECT_ID=${FIREBASE_PROJECT_ID}
+      - FIREBASE_AUTH_DOMAIN=${FIREBASE_AUTH_DOMAIN}
+      - FIREBASE_CREDENTIALS_PATH=/app/firebase-credentials.json
+      - GCS_BUCKET=${GCS_BUCKET:-local-bucket}
+      - GCP_PROJECT_ID=${GCP_PROJECT_ID}
+      - SESSION_TYPE=filesystem
+    volumes:
+      - .:/app
+      - flask_sessions:/app/flask_session
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ["python", "app.py"]
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: creative_ai_studio
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+  flask_sessions:
