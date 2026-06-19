@@ -33,11 +33,26 @@ def _brand_form(prefix: str = "brand") -> list:
         ),
 
         dbc.Label("Brand Tone", className="form-label-custom mt-2"),
-        dbc.Select(
+        dbc.Input(
             id=f"{prefix}-tone",
-            options=[{"label": o, "value": o} for o in TONE_OPTIONS],
-            placeholder="Select tone…",
-            className="form-input-custom mb-2",
+            type="text",
+            placeholder="Select or type your own tone…",
+            className="form-input-custom mb-1",
+        ),
+        html.Div(
+            [
+                html.Small("Suggestions: ", className="text-muted me-1"),
+                *[
+                    html.Span(
+                        o,
+                        id={"type": "tone-suggestion", "form": prefix, "tone": o},
+                        className="tone-chip me-1",
+                        n_clicks=0,
+                    )
+                    for o in TONE_OPTIONS
+                ],
+            ],
+            className="mb-2",
         ),
 
         dbc.Label("Brand Description", className="form-label-custom mt-2"),
@@ -49,20 +64,44 @@ def _brand_form(prefix: str = "brand") -> list:
         ),
 
         dbc.Label("Target Audience", className="form-label-custom mt-2"),
-        dbc.Textarea(
-            id=f"{prefix}-audience",
-            placeholder="Describe your ideal customer",
-            className="form-input-custom mb-2",
-            rows=2,
-        ),
+        dcc.Store(id=f"{prefix}-audience-list", data=[]),
+        dbc.InputGroup([
+            dbc.Input(
+                id=f"{prefix}-audience-input",
+                placeholder="e.g. Millennials 25–35",
+                className="form-input-custom",
+            ),
+            dbc.Button("Add", id=f"{prefix}-audience-add", color="secondary", outline=True, n_clicks=0),
+        ], className="mb-2"),
+        html.Div(id=f"{prefix}-audience-display", className="audience-tags-container mb-2"),
 
         dbc.Label("Brand Guidelines", className="form-label-custom mt-2"),
         dbc.Textarea(
             id=f"{prefix}-guidelines",
-            placeholder="Key brand guidelines (colours, voice, do's and don'ts)",
+            placeholder="Key brand guidelines (voice, do's and don'ts)",
             className="form-input-custom mb-2",
             rows=3,
         ),
+
+        dbc.Label("Brand Colours", className="form-label-custom mt-2"),
+        dcc.Store(id=f"{prefix}-colours-list", data=[]),
+        dbc.InputGroup([
+            dbc.Input(
+                id=f"{prefix}-colour-picker",
+                type="color",
+                value="#6366f1",
+                className="form-control form-control-color",
+                style={"width": "50px", "height": "38px", "padding": "2px", "cursor": "pointer"},
+            ),
+            dbc.Button(
+                [html.I(className="bi bi-plus-lg me-1"), "Add Colour"],
+                id=f"{prefix}-colour-add",
+                color="secondary",
+                outline=True,
+                n_clicks=0,
+            ),
+        ], className="mb-2"),
+        html.Div(id=f"{prefix}-colours-display", className="colours-swatches-container mb-2"),
 
         dbc.Label("Website", className="form-label-custom mt-2"),
         dbc.Input(

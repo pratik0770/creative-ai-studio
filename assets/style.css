@@ -846,6 +846,44 @@ h1,h2,h3,h4,h5,h6 { font-weight: 600; line-height: 1.3; }
 ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
+/* ── Tone Suggestion Chips ────────────────────────────────────── */
+.tone-chip {
+  display: inline-block;
+  font-size: 0.72rem;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: rgba(99, 102, 241, 0.12);
+  color: var(--primary);
+  cursor: pointer;
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  transition: background 0.15s;
+}
+.tone-chip:hover { background: rgba(99, 102, 241, 0.25); }
+
+/* ── Audience Tags ────────────────────────────────────────────── */
+.audience-tags-container { min-height: 32px; display: flex; flex-wrap: wrap; align-items: center; }
+.audience-tag {
+  font-size: 0.78rem !important;
+  padding: 4px 10px !important;
+  border-radius: 20px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px;
+  user-select: none;
+}
+.audience-tag span { font-size: 1rem; line-height: 1; }
+
+/* ── Colour Swatches ──────────────────────────────────────────── */
+.colours-swatches-container { min-height: 32px; display: flex; flex-wrap: wrap; align-items: center; }
+.colour-swatch-item {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  gap: 6px;
+}
+
 /* ── Responsive ───────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .sidebar { transform: translateX(-100%); }

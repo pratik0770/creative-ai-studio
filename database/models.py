@@ -41,6 +41,7 @@ class Brand(Base):
     brand_guidelines = Column(Text)
     website = Column(String(500))
     industry = Column(String(100))
+    brand_colours = Column(Text)                          # Comma-separated hex codes
     logo_url = Column(String(500))                       # GCS URL (future)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())

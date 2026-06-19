@@ -79,6 +79,7 @@ def create_brand(user_id: str, email: str, data: dict) -> tuple[bool, str, Optio
             brand_guidelines=data.get("brand_guidelines", ""),
             website=data.get("website", ""),
             industry=data.get("industry", ""),
+            brand_colours=",".join(data.get("brand_colours") or []),
         )
         db.add(brand)
         db.commit()
@@ -116,6 +117,7 @@ def update_brand(brand_id: str, user_id: str, data: dict) -> tuple[bool, str, Op
         brand.brand_guidelines = data.get("brand_guidelines", brand.brand_guidelines)
         brand.website = data.get("website", brand.website)
         brand.industry = data.get("industry", brand.industry)
+        brand.brand_colours = ",".join(data.get("brand_colours") or [])
         db.commit()
         db.refresh(brand)
         return True, "Brand updated successfully.", _brand_to_dict(brand)
@@ -164,6 +166,7 @@ def _brand_to_dict(b: Brand) -> dict:
         "brand_guidelines": b.brand_guidelines or "",
         "website": b.website or "",
         "industry": b.industry or "",
+        "brand_colours": [c for c in (b.brand_colours or "").split(",") if c],
         "logo_url": b.logo_url or "",
         "created_at": b.created_at.isoformat() if b.created_at else "",
         "updated_at": b.updated_at.isoformat() if b.updated_at else "",
